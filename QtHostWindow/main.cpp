@@ -5,7 +5,7 @@
 #include <QWinHost>
 
 // import from winform.dll
-extern "C" __declspec(dllimport) HWND CreateForm();
+extern "C" __declspec(dllimport) HWND CreateForm(HWND);
 
 int main(int argc, char *argv[])
 {
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     MainWindow w;
 
 	// create winform
-	HWND form = CreateForm();
+	HWND form = CreateForm((HWND)w.winId());
 
 	// apply child style to form to avoid focus lose
 	LONG_PTR style = GetWindowLongPtr(form, GWL_STYLE);
@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 	host->setWindow(form);
 	w.setCentralWidget(host);
 
-    w.show();
+	// Show 
+	w.show();
     return a.exec();
 }
